@@ -1,6 +1,8 @@
 
 import 'package:deneme_a/harita.dart';
 import 'package:deneme_a/girisekrani.dart';
+import 'package:deneme_a/kullaniciservisi.dart';
+import 'package:deneme_a/takipsayfasi.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -13,10 +15,13 @@ class KayitEkrani extends StatefulWidget {
 }
 
 class _KayitEkraniState extends State<KayitEkrani> {
+
   String email = "";
   String sifre = "";
   String isim="";
+
   var _formAnahtari= GlobalKey<FormState>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +49,7 @@ class _KayitEkraniState extends State<KayitEkrani> {
                       });
                     },
                     decoration: InputDecoration(
-                        labelText: "İsim",
+                        labelText: "Telefon",
                         border: OutlineInputBorder()
                     ),
                   ),
@@ -156,7 +161,7 @@ class _KayitEkraniState extends State<KayitEkrani> {
           password: sifre.trim()).then((value) {
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (_)=>Harita()),(route)=> false);
+            MaterialPageRoute(builder: (_)=>TakipSayfasi()),(route)=> false);
       });
    }
 

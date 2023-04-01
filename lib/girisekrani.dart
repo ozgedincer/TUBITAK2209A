@@ -1,6 +1,7 @@
 
 import 'package:deneme_a/harita.dart';
 import 'package:deneme_a/sifreyenileme.dart';
+import 'package:deneme_a/takipsayfasi.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -110,7 +111,7 @@ class _GirisEkraniState extends State<GirisEkrani> {
           password: sifre.trim()).then((value){
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (_)=>Harita()),(route)=> false);
+            MaterialPageRoute(builder: (_)=>TakipSayfasi()),(route)=> false);
       });
     }
     else {

@@ -1,4 +1,6 @@
-
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:deneme_a/directions_model.dart';
+import 'package:deneme_a/directions_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -19,6 +21,7 @@ class _HaritaState extends State<Harita>{
   late GoogleMapController _googleMapController;
   Marker? _origin;
   Marker? _destination;
+  Directions? _info;
 
   @override
   void dispose(){
@@ -29,8 +32,12 @@ class _HaritaState extends State<Harita>{
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white70,
         centerTitle:  false,
-        title: const Text('Goggle Maps'),
+        title: const Text('Google Maps',
+        style: TextStyle(
+          color: Colors.black54,
+        ),),
         actions: [
           if (_origin != null)
           TextButton(onPressed: () => _googleMapController.animateCamera(
@@ -46,7 +53,7 @@ class _HaritaState extends State<Harita>{
               primary: Colors.green,
               textStyle:  const TextStyle(fontWeight: FontWeight.w600),
             ),
-            child: const Text('ORIGIN'),
+            child: const Text('Başlangıç Noktası'),
           ),
           if(_destination != null)
             TextButton(onPressed: ()=> _googleMapController.animateCamera(
@@ -62,11 +69,14 @@ class _HaritaState extends State<Harita>{
                 primary: Colors.blue,
                 textStyle: const TextStyle(fontWeight: FontWeight.w600),
               ),
-              child: const Text('DEST'),
+              child: const Text('Varış Noktası'),
             )
         ],
       ),
-      body: GoogleMap(
+      body: Stack(
+        alignment: Alignment.center,
+      children:[
+        GoogleMap(
         myLocationButtonEnabled: false,
         zoomControlsEnabled: false,
         initialCameraPosition: _initialCameraPosition ,
@@ -75,13 +85,55 @@ class _HaritaState extends State<Harita>{
           if (_origin != null) _origin!,
           if (_destination != null) _destination!
         },
+          polylines: {
+          if(_info != null)
+            Polyline(
+                polylineId: const PolylineId('overview_polyline'),
+            color: Colors.red,
+            width: 5,
+            points: _info!.polylinePoints.map((e) => LatLng(e.latitude, e.longitude)).toList(),
+            ),
+          },
         onLongPress: _addMarker,
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColor,
-        foregroundColor: Colors.black,
+        if(_info != null)
+          Positioned(
+            top: 20.0,
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 6.0,
+                  horizontal: 12.0,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.yellowAccent,
+                  borderRadius: BorderRadius.circular(20.0),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black26,
+                      offset: Offset(0,2),
+                      blurRadius: 6.0,
+                    )
+                  ],
+                ),
+                child: Text(
+                  '${_info!.totalDistance},${_info!.totalDuration}',
+                  style: const TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+          ),
+    ],
+      ),
+    floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.white70,
+        foregroundColor: Colors.black54,
         onPressed: ()=> _googleMapController.animateCamera(
-        CameraUpdate.newCameraPosition(_initialCameraPosition),
+          _info != null
+              ? CameraUpdate.newLatLngBounds(_info!.bounds, 100.0)
+              : CameraUpdate.newCameraPosition(_initialCameraPosition),
+
     ),
         child: const Icon(Icons.center_focus_strong),
       ),
@@ -91,27 +143,31 @@ class _HaritaState extends State<Harita>{
 
 
 
-  void _addMarker(LatLng pos) {
+  void _addMarker(LatLng pos) async{
     if (_origin == null || (_origin != null && _destination != null)){
       setState(() {
         _origin=Marker(
             markerId:const MarkerId('origin'),
-        infoWindow: const InfoWindow(title: 'KONUMUNUZ'),
+        infoWindow: const InfoWindow(title: 'Başlangıç Noktası'),
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
         position: pos,
         );
         _destination==null;
+        _info==null;
       });
     }
     else {
       setState(() {
         _destination=Marker(
           markerId: const MarkerId('destination'),
-        infoWindow:const InfoWindow(title: 'HEDEF KONUM'),
+        infoWindow:const InfoWindow(title: 'Varış Noktası'),
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
         position: pos,
         );
       });
+
+      final directions=await DirectionsRepository().getDirections(origin: _origin!.position, destination: pos);
+      setState(()=>_info=directions);
     }
   }
 }
