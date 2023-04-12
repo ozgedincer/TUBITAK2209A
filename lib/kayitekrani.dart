@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'package:deneme_a/harita.dart';
 import 'package:deneme_a/girisekrani.dart';
 import 'package:deneme_a/kullaniciservisi.dart';
@@ -8,6 +10,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 
 class KayitEkrani extends StatefulWidget {
   @override
@@ -19,8 +22,11 @@ class _KayitEkraniState extends State<KayitEkrani> {
   String email = "";
   String sifre = "";
   String isim="";
+  String soyad="";
 
   var _formAnahtari= GlobalKey<FormState>();
+
+
 
 
   @override
@@ -32,7 +38,7 @@ class _KayitEkraniState extends State<KayitEkrani> {
         child: Container(
           padding: EdgeInsets.all(5.0),
           child: Padding(
-            padding: const EdgeInsets.all(50.0),
+            padding: const EdgeInsets.all(40.0),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -43,19 +49,45 @@ class _KayitEkraniState extends State<KayitEkrani> {
                   ),),),
                  Container(alignment: Alignment.bottomCenter,width: 200,height: 50,
                    child: Text('Haydi başlayalım.',style: TextStyle(color: Colors.black,fontSize: 15,),),),
-                  SizedBox(height: 50,),
+                  SizedBox(height: 35,),
                  TextFormField(
                     onChanged: (alinanIsim) {
                       setState(() {
                         isim = alinanIsim;
                       });
                     },
+                   validator: (alinanIsim){
+                     if(alinanIsim==null){
+                       return "Bu Alan Boş Bırakılamaz";
+                     }else{
+                       return null;
+                     }
+                   },
                     decoration: InputDecoration(
-                        labelText: "İsim Soyisim",
+                        labelText: "Ad",
                         border: OutlineInputBorder()
                     ),
                   ),
-                  SizedBox(height: 15,),
+                  SizedBox(height: 10,),
+                  TextFormField(
+                    onChanged: (alinanSoyad) {
+                      setState(() {
+                        soyad = alinanSoyad;
+                      });
+                    },
+                    validator: (alinanSoyad){
+                      if(alinanSoyad==null){
+                        return "Bu Alan Boş Bırakılmaz";
+                      }else {
+                        return null;
+                      }
+                    },
+                    decoration: InputDecoration(
+                        labelText: "Soyad",
+                        border: OutlineInputBorder()
+                    ),
+                  ),
+                  SizedBox(height: 10,),
                   TextFormField(
                     onChanged: (alinanMail) {
                       setState(() {
@@ -76,7 +108,7 @@ class _KayitEkraniState extends State<KayitEkrani> {
                         border: OutlineInputBorder()
                     ),
                   ),
-                  SizedBox(height: 15,),
+                  SizedBox(height: 10,),
                   TextFormField(
                       onChanged: (alinanSifre) {
                         setState(() {
@@ -99,7 +131,15 @@ class _KayitEkraniState extends State<KayitEkrani> {
                           border: OutlineInputBorder()
                       )
                   ),
-                  SizedBox(height: 50,),
+                  SizedBox(height: 10,),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "+905005005050",
+                        labelText: "Telefon",
+                        border: OutlineInputBorder()
+                    ),
+                  ),
+                  SizedBox(height: 40,),
                   Container(
                     width: double.infinity,
                     height: 60,

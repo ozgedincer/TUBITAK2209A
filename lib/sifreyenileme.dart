@@ -39,6 +39,14 @@ class _SifreYenilemeState extends State<SifreYenileme> {
                         email = alinanMail;
                       });
                     },
+                    validator: (alinanMail){
+                      if(alinanMail.toString().contains('@')){
+                        return null;
+                      }
+                      else if (alinanMail != null){
+                        return 'Geçerli Bir Email Adresİ Giriniz';
+                      }
+                    },
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                         labelText: "Email",
@@ -76,6 +84,7 @@ class _SifreYenilemeState extends State<SifreYenileme> {
 
 
   Future SifreYenileme() async{
-    FirebaseAuth.instance.sendPasswordResetEmail(email: email).then((value) => Navigator.of(context).pop());
+    if(_formAnahtari.currentState!.validate()){
+    FirebaseAuth.instance.sendPasswordResetEmail(email: email).then((value) => Navigator.of(context).pop());}
   }
 }

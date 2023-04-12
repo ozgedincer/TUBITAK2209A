@@ -76,6 +76,7 @@ dependencies {
     implementation "androidx.multidex:multidex:$multidex_version"
     implementation 'com.firebase:geofire-android:3.2.0'
     implementation 'com.firebase:geofire-android-common:3.2.0'
+
 }
 
 
