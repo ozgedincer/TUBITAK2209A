@@ -1,11 +1,9 @@
-
-import 'package:deneme_a/harita.dart';
+import 'package:deneme_a/MapToplayici.dart';
+import 'package:deneme_a/basvuru.dart';
 import 'package:deneme_a/sifreyenileme.dart';
 import 'package:deneme_a/takipsayfasi.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class GirisEkrani extends StatefulWidget {
@@ -66,15 +64,15 @@ class _GirisEkraniState extends State<GirisEkrani> {
                   Container(
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
-                      child: TextButton(
-                          child: Text('Şifremi Unuttum'),
+                        child: TextButton(
+                            child: Text('Şifremi Unuttum'),
 
-                          onPressed: () {
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(builder: (_)=>SifreYenileme()),(route)=> false);
-                          }
-                      )
+                            onPressed: () {
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(builder: (_)=>SifreYenileme()),(route)=> false);
+                            }
+                        )
                     ),
                   ),
                   SizedBox(height: 10,),
@@ -89,7 +87,7 @@ class _GirisEkraniState extends State<GirisEkrani> {
                               fontWeight: FontWeight.w600)
                       ),
                       onPressed: () {
-                       GirisYap();
+                        GirisYap();
                       },
                       child: Text("GİRİŞ YAP"),
                     ),
@@ -111,7 +109,7 @@ class _GirisEkraniState extends State<GirisEkrani> {
           password: sifre.trim()).then((value){
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (_)=>TakipSayfasi()),(route)=> false);
+            MaterialPageRoute(builder: (_)=>basvuru()),(route)=> false);
       });
     }
     else {

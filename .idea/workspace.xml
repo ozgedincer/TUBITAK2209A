@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1e7e3827-281d-4a08-b801-eb338de37bf6" name="Changes" comment="" />
+    <list default="true" id="571f8563-3661-40ae-bc2d-fb552c775da5" name="Changes" comment="14.03.23 güncellemesi:&#10;kayıt işlemleri ve harita eklendi">
+      <change afterPath="$PROJECT_DIR$/lib/MapToplayici.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/directions_model.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/directions_repository.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/girisekrani.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/girisekrani.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/harita.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/kayitekrani.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/kayitekrani.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/kullanici.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/kullanici.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/kullaniciservisi.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/kullaniciservisi.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/sifreyenileme.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/sifreyenileme.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/takipsayfasi.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/takipsayfasi.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,10 +35,19 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2MYr1CdEyA5lLrfACjQcciexPR9" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -27,17 +58,30 @@
     <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
     <property name="cidr.known.project.marker" value="true" />
     <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="io.flutter.reload.alreadyRun" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/OneDrive/Documents/GitHub/TUBITAK2209A" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="020c106c-2ff7-4e08-b6cb-dbe7e1a09103" name="Changes" comment="" />
+      <changelist id="571f8563-3661-40ae-bc2d-fb552c775da5" name="Changes" comment="14.03.23 güncellemesi:&#10;kayıt işlemleri ve harita eklendi" />
       <created>1677955142024</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1677955142024</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

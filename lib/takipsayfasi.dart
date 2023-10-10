@@ -1,10 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:deneme_a/apikey.dart';
 import 'package:deneme_a/kullaniciservisi.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_geofire/flutter_geofire.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
@@ -20,19 +17,19 @@ class TakipSayfasi extends StatefulWidget {
 class _TakipSayfasiState extends State<TakipSayfasi> {
 
 
-  KullaniciServisi _kullaniciServisi=KullaniciServisi();
+  final KullaniciServisi _kullaniciServisi=KullaniciServisi();
 
 
   final Completer<GoogleMapController> _controller=Completer();
 
-  GeoPoint geoPoint=GeoPoint(40.8233, 29.9254);
-  static const LatLng destination=LatLng(40.8233, 29.9254);
+
+  //static const LatLng destination=LatLng(40.8233, 29.9254);
 
 
   List<LatLng> polylineCoordinates=[];
   LocationData? currentLocation;
-  bool? _serviceEnabled;
-  PermissionStatus? _permissionlocation;
+  //bool? _serviceEnabled;
+  //PermissionStatus? _permissionlocation;
   LocationData? _locData;
   String kullaniciID="";
   String telefon="";
@@ -41,9 +38,10 @@ class _TakipSayfasiState extends State<TakipSayfasi> {
 
   void getSourceLocation() async {
 
-    Location location=new Location();
+    Location location= Location();
 
-    _serviceEnabled=await location.serviceEnabled();
+    // konum bilgisi için izin
+    /*_serviceEnabled=await location.serviceEnabled();
     if(!_serviceEnabled!){
       _serviceEnabled=await location.requestService();
       if(!_serviceEnabled!){
@@ -57,11 +55,12 @@ class _TakipSayfasiState extends State<TakipSayfasi> {
       if(_permissionlocation!=PermissionStatus.granted){
         return;
       }
-    }
+    }*/
 
     _locData=await location.getLocation();
+    GeoPoint geoPoint=GeoPoint(_locData!.latitude!,_locData!.longitude!);
 
-    _kullaniciServisi.kullaniciEkle(kullaniciID, telefon, geoPoint);
+    _kullaniciServisi.addUser(kullaniciID, telefon, geoPoint);
 
   }
 
@@ -70,52 +69,33 @@ class _TakipSayfasiState extends State<TakipSayfasi> {
     Location location=Location();
     location.getLocation().then(
             (location) {
-      currentLocation=location;
-    });
+          currentLocation=location;
+        });
 
     GoogleMapController googleMapController = await _controller.future;
 
     location.onLocationChanged.listen((newLoc) {
       currentLocation=newLoc;
       googleMapController.animateCamera(
-          CameraUpdate.newCameraPosition(
+        CameraUpdate.newCameraPosition(
           CameraPosition(
-            zoom: 150.5,
-          target: LatLng(
-              newLoc.latitude!,
-              newLoc.longitude!,
-          )
+              zoom: 150.5,
+              target: LatLng(
+                newLoc.latitude!,
+                newLoc.longitude!,
+              )
           ),
-          ),
+        ),
       );
     });
   }
 
 
-  void getPolyPoints() async {
-    PolylinePoints polylinePoints=PolylinePoints();
-    
-    PolylineResult result= await polylinePoints.getRouteBetweenCoordinates(
-      googleAPIKey,
-      PointLatLng(_locData!.latitude!, _locData!.longitude!),
-      PointLatLng(destination.latitude, destination.longitude),
-    );
-    if (result.points.isNotEmpty){
-      result.points.forEach(
-              (PointLatLng point)=> polylineCoordinates.add(
-          LatLng(point.latitude, point.longitude),
-      ),
-      );
-      setState(() {});
-    }
-  }
-
   @override
   void initState(){
-     super.initState();
-     getCurrentLocation();
-     getPolyPoints();
-     getSourceLocation();
+    super.initState();
+    getCurrentLocation();
+    getSourceLocation();
   }
 
 
@@ -128,42 +108,33 @@ class _TakipSayfasiState extends State<TakipSayfasi> {
         centerTitle: true,
         backgroundColor: Colors.green,
         title: const Text(
-            "ATIK TAKİP",
-        style: TextStyle(
-            fontWeight: FontWeight.w800,
-            color: Colors.white70,
-            fontSize: 20),
+          "ATIK TAKİP",
+          style: TextStyle(
+              fontWeight: FontWeight.w800,
+              color: Colors.white70,
+              fontSize: 20),
         ),
       ),
       body:
       currentLocation==null
-        ? Center(child: Text("Yükleniyor"))
-        : GoogleMap(
+          ? const Center(child: Text("Yükleniyor"))
+          : GoogleMap(
         myLocationEnabled: true,
         initialCameraPosition:
         CameraPosition(
             target: LatLng(currentLocation!.latitude!,currentLocation!.longitude!),
             zoom: 13.5),
-        polylines: {
-          Polyline(
-            polylineId: PolylineId("route"),
-            points: polylineCoordinates,
-            color: Colors.indigo,
-            width: 6,
-
-          ),
-        },
         markers: {
           Marker(
               infoWindow: const InfoWindow(title: 'Anlık Konum'),
-            markerId: const MarkerId("currentLocation"),
-            position: LatLng(
-                currentLocation!.latitude!,
-                currentLocation!.longitude!)
+              markerId: const MarkerId("currentLocation"),
+              position: LatLng(
+                  currentLocation!.latitude!,
+                  currentLocation!.longitude!)
           ),
-         Marker(
-           infoWindow: const InfoWindow(title: 'Çıkış Noktası'),
-           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+          Marker(
+            infoWindow: const InfoWindow(title: 'Çıkış Noktası'),
+            icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
             markerId: const MarkerId("source"),
             position: LatLng(
                 _locData!.latitude!,
@@ -173,13 +144,13 @@ class _TakipSayfasiState extends State<TakipSayfasi> {
             infoWindow: const InfoWindow(title: 'Varış Noktası'),
             icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
             markerId: const MarkerId("destination"),
-            position:LatLng(geoPoint.latitude,geoPoint.longitude),
+            position:LatLng(_locData!.latitude!, _locData!.longitude!),
           ),
         },
         onMapCreated: (mapController){
           _controller.complete(mapController);
         },
-        
+
       ),
 
     );

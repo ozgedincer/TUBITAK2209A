@@ -1,5 +1,4 @@
-
-import 'package:deneme_a/harita.dart';
+import 'package:deneme_a/MapToplayici.dart';
 import 'package:deneme_a/girisekrani.dart';
 import 'package:deneme_a/kullaniciservisi.dart';
 import 'package:deneme_a/takipsayfasi.dart';
@@ -42,7 +41,7 @@ class _KayitEkraniState extends State<KayitEkrani> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                 TextFormField(
+                  TextFormField(
                     onChanged: (alinanIsim) {
                       setState(() {
                         isim = alinanIsim;
@@ -102,17 +101,17 @@ class _KayitEkraniState extends State<KayitEkrani> {
                     width: double.infinity,
                     height: 60,
                     child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.green,
-                           textStyle: GoogleFonts.poppins(
-                               fontSize: 22,
-                               fontWeight: FontWeight.w600)
-                           ),
-                        onPressed: () {
-                          KayitEkle();
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.green,
+                          textStyle: GoogleFonts.poppins(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w600)
+                      ),
+                      onPressed: () {
+                        KayitEkle();
 
-                        },
-                        child: Text("KAYDOL"),
+                      },
+                      child: Text("KAYDOL"),
                     ),
                   ),
                   SizedBox(height: 15,),
@@ -121,25 +120,25 @@ class _KayitEkraniState extends State<KayitEkrani> {
                     child: GestureDetector(
                       child: RichText(
                         text: TextSpan(
-                          text: 'Zaten Bir Hesabım Var.',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18
-                          ),
-                          children: <TextSpan>[
-                            TextSpan(text: 'Giriş Yap',
+                            text: 'Zaten Bir Hesabım Var.',
                             style: TextStyle(
-                              color: Colors.blueAccent,
-                              fontSize: 18
+                                color: Colors.black,
+                                fontSize: 18
                             ),
-                            recognizer: TapGestureRecognizer()
-                            ..onTap=(){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => GirisEkrani()),
-                              );
-                            })
-                          ]
+                            children: <TextSpan>[
+                              TextSpan(text: 'Giriş Yap',
+                                  style: TextStyle(
+                                      color: Colors.blueAccent,
+                                      fontSize: 18
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap=(){
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => GirisEkrani()),
+                                      );
+                                    })
+                            ]
                         ),
                       ),
                     ),
@@ -154,8 +153,8 @@ class _KayitEkraniState extends State<KayitEkrani> {
   }
 
   Future KayitEkle() async{
-   if(_formAnahtari.currentState!.validate())
-   {
+    if(_formAnahtari.currentState!.validate())
+    {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: email.trim(),
           password: sifre.trim()).then((value) {
@@ -163,7 +162,7 @@ class _KayitEkraniState extends State<KayitEkrani> {
             context,
             MaterialPageRoute(builder: (_)=>TakipSayfasi()),(route)=> false);
       });
-   }
+    }
 
   }
 }

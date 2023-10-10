@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 
 class Kullanici{
   String? kullaniciID;
@@ -14,6 +12,26 @@ class Kullanici{
       kullaniciID: snapshot.id,
       telefon: snapshot["telefon"],
       konum: snapshot["konum"],
+    );
+  }
+}
+
+class Basvuru{
+  String? basvuruID;
+  String? atikTuru;
+  String? agirlik;
+  String? tasimaSirketi;
+  String? Durum;
+
+  Basvuru({this.basvuruID,this.atikTuru,this.agirlik,this.tasimaSirketi,this.Durum});
+
+  factory Basvuru.fromSnapshot(DocumentSnapshot snapshot){
+    return Basvuru(
+      basvuruID: snapshot.id,
+      atikTuru: snapshot["atikTuru"],
+      agirlik: snapshot["agirlik"],
+      tasimaSirketi: snapshot["tasimaSirketi"],
+      Durum:snapshot ["Durum"],
     );
   }
 }

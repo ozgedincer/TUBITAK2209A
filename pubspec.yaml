@@ -31,21 +31,17 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.2
-  dio: ^5.0.2
+  cupertino_icons: ^1.0.5
   flutter_polyline_points: ^1.0.0
   google_maps_flutter: ^2.2.5
   location: ^4.4.0
   flutter_svg: ^2.0.4
   google_fonts:
   fluttertoast:
-  firebase_auth: ^1.0.1
-  firebase_core: ^1.0.1
-  firebase_core_platform_interface: 4.5.1
-  geocoding: ^2.1.0
-  cloud_firestore: ^2.4.0
-  geopoint: ^1.0.0
-  flutter_geofire: ^2.0.3
+  firebase_auth: ^4.4.0
+  firebase_core: ^2.9.0
+  cloud_firestore: ^4.5.0
+
 
 
   # The following adds the Cupertino Icons font to your application.
