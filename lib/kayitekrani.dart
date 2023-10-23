@@ -1,4 +1,5 @@
 import 'package:deneme_a/MapToplayici.dart';
+import 'package:deneme_a/basvuru.dart';
 import 'package:deneme_a/girisekrani.dart';
 import 'package:deneme_a/kullaniciservisi.dart';
 import 'package:deneme_a/takipsayfasi.dart';
@@ -14,6 +15,8 @@ class KayitEkrani extends StatefulWidget {
 }
 
 class _KayitEkraniState extends State<KayitEkrani> {
+
+  final KullaniciServisi _servis = KullaniciServisi();
 
   String email = "";
   String sifre = "";
@@ -47,8 +50,14 @@ class _KayitEkraniState extends State<KayitEkrani> {
                         isim = alinanIsim;
                       });
                     },
+                    validator: (alinanIsim) {
+                      if (alinanIsim == null || alinanIsim.isEmpty) {
+                        return 'Lütfen İsminizi Girin';
+                      }
+                      return null; // Geçerli veri, hata yok.
+                    },
                     decoration: InputDecoration(
-                        labelText: "Telefon",
+                        labelText: "İsim",
                         border: OutlineInputBorder()
                     ),
                   ),
@@ -152,17 +161,24 @@ class _KayitEkraniState extends State<KayitEkrani> {
     );
   }
 
-  Future KayitEkle() async{
-    if(_formAnahtari.currentState!.validate())
-    {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+  Future KayitEkle() async {
+    if (_formAnahtari.currentState!.validate()) {
+      try {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: email.trim(),
-          password: sifre.trim()).then((value) {
+          password: sifre.trim(),
+        );
+        _servis.addUser(isim, email, sifre);
         Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (_)=>TakipSayfasi()),(route)=> false);
-      });
+          context,
+          MaterialPageRoute(builder: (_) => basvuru()),
+              (route) => false,
+        );
+      } catch (e) {
+        // Hata mesajı
+        Fluttertoast.showToast(msg: "Kayıt sırasında bir hata oluştu: $e", gravity: ToastGravity.TOP);
+      }
     }
-
   }
+
 }

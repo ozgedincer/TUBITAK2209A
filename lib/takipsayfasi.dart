@@ -1,3 +1,4 @@
+/*
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deneme_a/kullaniciservisi.dart';
@@ -60,7 +61,7 @@ class _TakipSayfasiState extends State<TakipSayfasi> {
     _locData=await location.getLocation();
     GeoPoint geoPoint=GeoPoint(_locData!.latitude!,_locData!.longitude!);
 
-    _kullaniciServisi.addUser(kullaniciID, telefon, geoPoint);
+    _kullaniciServisi.add(kullaniciID, telefon, geoPoint);
 
   }
 
@@ -159,3 +160,4 @@ class _TakipSayfasiState extends State<TakipSayfasi> {
 
 }
 
+*/

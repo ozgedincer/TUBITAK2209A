@@ -1,4 +1,4 @@
-import 'dart:async';
+/*import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deneme_a/kullaniciservisi.dart';
 import 'package:location/location.dart';
@@ -38,7 +38,7 @@ class _MapToplayiciState extends State<MapToplayici> {
     });
     _loc!= await location.getLocation();
     GeoPoint geoPoint=GeoPoint(_loc!.latitude!,_loc!.longitude!);
-    _kullaniciServisi.addUser(kullaniciID, telefon, geoPoint);
+    _kullaniciServisi.add(kullaniciID, telefon, geoPoint);
   }
 
 
@@ -99,3 +99,4 @@ class _MapToplayiciState extends State<MapToplayici> {
     );
   }
 }
+*/

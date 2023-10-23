@@ -22,8 +22,10 @@ class Basvuru{
   String? agirlik;
   String? tasimaSirketi;
   String? Durum;
+  String? Adres;
+  String? userId;
 
-  Basvuru({this.basvuruID,this.atikTuru,this.agirlik,this.tasimaSirketi,this.Durum});
+  Basvuru({this.basvuruID,this.atikTuru,this.agirlik,this.tasimaSirketi,this.Durum,this.Adres,this.userId});
 
   factory Basvuru.fromSnapshot(DocumentSnapshot snapshot){
     return Basvuru(
@@ -32,6 +34,40 @@ class Basvuru{
       agirlik: snapshot["agirlik"],
       tasimaSirketi: snapshot["tasimaSirketi"],
       Durum:snapshot ["Durum"],
+      Adres: snapshot ["Adres"],
+      userId:snapshot ["userId"],
     );
+  }
+}
+
+class Kayit{
+  String? isim;
+  String? email;
+  String? sifre;
+  Kayit({this.isim,this.email,this.sifre});
+  factory Kayit.fromSnapshot(DocumentSnapshot snapshot){
+    return Kayit(
+      isim: snapshot["isim"],
+      email: snapshot["email"],
+      sifre: snapshot["sifre"],
+    );
+  }
+}
+
+class AddressInfo {
+  String? country;
+  String? state;
+  String? city;
+  String? address;
+
+  AddressInfo({this.country, this.state, this.city, this.address});
+
+  bool isValid() {
+    return country != null && state != null && city != null && address != null;
+  }
+
+  @override
+  String toString() {
+    return '$address $city/$state/$country';
   }
 }

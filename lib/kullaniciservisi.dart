@@ -7,28 +7,48 @@ class KullaniciServisi{
 
   final FirebaseFirestore _firestore=FirebaseFirestore.instance;
 
-  // kayıt ekle
-  Future addUser(String kullaniciID,String telefon, GeoPoint konum ) async {
+  // konum bilgisi ekle
+  Future add(String kullaniciID,String telefon, GeoPoint konum ) async {
     var ref= _firestore.collection("kullanici");
     var kullaniciref= await ref.add({
       'telefon':telefon,
       'konum':konum,
     });
-
     return Kullanici(kullaniciID:kullaniciref.id,telefon:telefon,konum:konum);
+  }
 
+  // kullanıcı kaydı ekle
+  Future addUser(String isim, String email, String sifre) async {
+    var ref=_firestore.collection("kayit");
+    var kayitref=await ref.add({
+      'isim':isim,
+      'email':email,
+      'sifre':sifre,
+    });
+    return Kayit(isim: isim,email: email,sifre: sifre);
   }
 
   // basvuru ekle
-  Future addRequest(int basvuruID,String atikTuru,String agirlik,String tasimaSirketi,String Durum)async{
-    var ref=_firestore.collection("basvuru");
-    var basvururef1=await ref.add({
-      'agirlik':agirlik,
-      'atikTuru':atikTuru,
-      'tasimaSirketi':tasimaSirketi,
-      'Durum':Durum,
+  Future addRequest(String atikTuru, String agirlik, String tasimaSirketi, String Durum, String Adres, String userId) async {
+    var ref = _firestore.collection("basvuru");
+    DocumentReference basvururef = await ref.add({
+      'agirlik': agirlik,
+      'atikTuru': atikTuru,
+      'tasimaSirketi': tasimaSirketi,
+      'Durum': Durum,
+      'Adres': Adres,
+      'userId': userId,
     });
-    return Basvuru(basvuruID: basvururef1.id,atikTuru: atikTuru,agirlik: agirlik,tasimaSirketi: tasimaSirketi,Durum: Durum);
+    print("Oluşturulan Başvuru ID: ${basvururef.id}");
+    return Basvuru(
+      basvuruID: basvururef.id, // Oluşturulan belge ID'sini al
+      atikTuru: atikTuru,
+      agirlik: agirlik,
+      tasimaSirketi: tasimaSirketi,
+      Durum: Durum,
+      Adres: Adres,
+      userId: userId,
+    );
   }
 
   //konum bilgisi al

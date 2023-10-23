@@ -1,7 +1,6 @@
-import 'package:deneme_a/MapToplayici.dart';
+
 import 'package:deneme_a/basvuru.dart';
 import 'package:deneme_a/sifreyenileme.dart';
-import 'package:deneme_a/takipsayfasi.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -68,9 +67,9 @@ class _GirisEkraniState extends State<GirisEkrani> {
                             child: Text('Şifremi Unuttum'),
 
                             onPressed: () {
-                              Navigator.pushAndRemoveUntil(
+                              Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (_)=>SifreYenileme()),(route)=> false);
+                                  MaterialPageRoute(builder: (context) => SifreYenileme()),);
                             }
                         )
                     ),
@@ -109,11 +108,8 @@ class _GirisEkraniState extends State<GirisEkrani> {
           password: sifre.trim()).then((value){
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (_)=>basvuru()),(route)=> false);
+            MaterialPageRoute(builder: (_)=>basvuru()),(route)=> true);
       });
-    }
-    else {
-
     }
   }
 }
