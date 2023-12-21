@@ -1,3 +1,4 @@
+import 'package:deneme_a/BottomNavBarExample.dart';
 import 'package:deneme_a/MapToplayici.dart';
 import 'package:deneme_a/basvuru.dart';
 import 'package:deneme_a/girisekrani.dart';
@@ -21,6 +22,9 @@ class _KayitEkraniState extends State<KayitEkrani> {
   String email = "";
   String sifre = "";
   String isim="";
+  String adres="";
+  String key="";
+  String kullaniciId="";
 
   var _formAnahtari= GlobalKey<FormState>();
 
@@ -61,7 +65,7 @@ class _KayitEkraniState extends State<KayitEkrani> {
                         border: OutlineInputBorder()
                     ),
                   ),
-                  SizedBox(height: 50,),
+                  SizedBox(height: 10,),
                   TextFormField(
                     onChanged: (alinanMail) {
                       setState(() {
@@ -82,7 +86,7 @@ class _KayitEkraniState extends State<KayitEkrani> {
                         border: OutlineInputBorder()
                     ),
                   ),
-                  SizedBox(height: 50,),
+                  SizedBox(height: 10,),
                   TextFormField(
                       onChanged: (alinanSifre) {
                         setState(() {
@@ -105,7 +109,53 @@ class _KayitEkraniState extends State<KayitEkrani> {
                           border: OutlineInputBorder()
                       )
                   ),
-                  SizedBox(height: 50,),
+                  SizedBox(height: 10,),
+                  TextFormField(
+                      onChanged: (alinanAdres) {
+                        setState(() {
+                          adres = alinanAdres;
+                        });
+                      },
+                      validator: (alinanAdres){
+                        if (alinanAdres != null) {
+                          if (alinanAdres.length == 42) {
+                            return null;
+                          } else if (alinanAdres.length < 42) {
+                            return 'Geçerli Bir MetaMask Adresi Giriniz';
+                          }
+                        }
+                      },
+                      obscureText: true,
+                      maxLength: 42,
+                      decoration: InputDecoration(
+                          labelText: "MetaMask Adresi",
+                          border: OutlineInputBorder()
+                      )
+                  ),
+                  SizedBox(height: 10,),
+                  TextFormField(
+                      onChanged: (alinanKey) {
+                        setState(() {
+                          key = alinanKey;
+                        });
+                      },
+                      validator: (alinanKey){
+                        if (alinanKey != null) {
+                          if (alinanKey.length == 66) {
+                            return null;
+                          } else if (alinanKey.length < 66) {
+                            return 'Geçerli Bir MetaMask Private Key Giriniz';
+                          }
+                        }
+                      },
+                      obscureText: true,
+                      maxLength: 66,
+                      decoration: InputDecoration(
+                          labelText: "MetaMask Private Key",
+                          border: OutlineInputBorder()
+                      )
+                  ),
+                  SizedBox(height: 10,),
                   Container(
                     width: double.infinity,
                     height: 60,
@@ -123,7 +173,7 @@ class _KayitEkraniState extends State<KayitEkrani> {
                       child: Text("KAYDOL"),
                     ),
                   ),
-                  SizedBox(height: 15,),
+                  SizedBox(height: 10,),
                   Container(
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
@@ -164,21 +214,22 @@ class _KayitEkraniState extends State<KayitEkrani> {
   Future KayitEkle() async {
     if (_formAnahtari.currentState!.validate()) {
       try {
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: email.trim(),
           password: sifre.trim(),
         );
-        _servis.addUser(isim, email, sifre);
+        String kullaniciId = userCredential.user!.uid;
+        _servis.addUser(isim, email, sifre, adres, key, kullaniciId);
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (_) => basvuru()),
+          MaterialPageRoute(builder: (_) => BottomNavBarExample()),
               (route) => false,
         );
       } catch (e) {
-        // Hata mesajı
         Fluttertoast.showToast(msg: "Kayıt sırasında bir hata oluştu: $e", gravity: ToastGravity.TOP);
       }
     }
   }
+
 
 }

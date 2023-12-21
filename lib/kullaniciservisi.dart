@@ -7,6 +7,7 @@ class KullaniciServisi{
 
   final FirebaseFirestore _firestore=FirebaseFirestore.instance;
 
+
   // konum bilgisi ekle
   Future add(String kullaniciID,String telefon, GeoPoint konum ) async {
     var ref= _firestore.collection("kullanici");
@@ -18,14 +19,17 @@ class KullaniciServisi{
   }
 
   // kullanıcı kaydı ekle
-  Future addUser(String isim, String email, String sifre) async {
+  Future addUser(String isim, String email, String sifre,String adres,String key,String kullaniciId) async {
     var ref=_firestore.collection("kayit");
     var kayitref=await ref.add({
       'isim':isim,
       'email':email,
       'sifre':sifre,
+      'adres' :adres,
+      'key' :key,
+      'kullaniciId':kullaniciId,
     });
-    return Kayit(isim: isim,email: email,sifre: sifre);
+    return Kayit(isim: isim,email: email,sifre: sifre,adres: adres,key: key,kullaniciId:kullaniciId);
   }
 
   // basvuru ekle
@@ -72,7 +76,6 @@ class KullaniciServisi{
   //basvuru gecmisini sil
   Future<void> removeAct(String docId) {
     var ref = _firestore.collection("basvuru").doc(docId).delete();
-
     return ref;
   }
 

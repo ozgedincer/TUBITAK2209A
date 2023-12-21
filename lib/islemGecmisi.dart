@@ -15,6 +15,8 @@ class _islemGecmisiState extends State<islemGecmisi> {
 
   KullaniciServisi _kullaniciServisi = KullaniciServisi();
   String ddValue='İstek Alındı';
+  String userCompanyName='';
+
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +79,7 @@ class _islemGecmisiState extends State<islemGecmisi> {
                                   SizedBox(height: 20,),
                                   GestureDetector(
                                     onTap: () {
-                                      _kullaniciServisi.updateDurum(mypost.id, ddValue);
+                                      _kullaniciServisi.updateDurum(mypost.id,ddValue);
                                       Navigator.pop(context);
                                     },
                                     child: Text(

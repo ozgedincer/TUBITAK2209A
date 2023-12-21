@@ -1,16 +1,18 @@
-import 'package:deneme_a/BottomNavBarExample.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deneme_a/basvuru.dart';
+import 'package:deneme_a/islemGecmisi.dart';
+import 'package:deneme_a/main.dart';
 import 'package:deneme_a/sifreyenileme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class GirisEkrani extends StatefulWidget {
+class toplayiciGiris extends StatefulWidget {
   @override
-  State<GirisEkrani> createState() => _GirisEkraniState();
+  State<toplayiciGiris> createState() => _toplayiciGirisState();
 }
 
-class _GirisEkraniState extends State<GirisEkrani> {
+class _toplayiciGirisState extends State<toplayiciGiris> {
   String email = "";
   String sifre = "";
   var _formAnahtari= GlobalKey<FormState>();
@@ -68,8 +70,8 @@ class _GirisEkraniState extends State<GirisEkrani> {
 
                             onPressed: () {
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => SifreYenileme()),);
+                                context,
+                                MaterialPageRoute(builder: (context) => SifreYenileme()),);
                             }
                         )
                     ),
@@ -100,16 +102,42 @@ class _GirisEkraniState extends State<GirisEkrani> {
     );
   }
 
-
-  Future GirisYap() async{
-    if(_formAnahtari.currentState!.validate()){
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: email.trim(),
-          password: sifre.trim()).then((value){
-        Navigator.pushAndRemoveUntil(
+  Future<void> GirisYap() async {
+    if (_formAnahtari.currentState!.validate()) {
+      try {
+        var querySnapshot = await FirebaseFirestore.instance
+            .collection('toplayici')
+            .where('email', isEqualTo: email)
+            .where('sifre', isEqualTo: sifre)
+            .get();
+        if (querySnapshot.docs.isNotEmpty) {
+          Navigator.push(
             context,
-            MaterialPageRoute(builder: (_)=>BottomNavBarExample()),(route)=> true);
-      });
+            MaterialPageRoute(builder: (context) => islemGecmisi()),
+          );
+        } else {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text('Hata'),
+                content: Text('Giriş bilgileri hatalı. Lütfen tekrar deneyin.'),
+                actions: <Widget>[
+                  TextButton(
+                    child: Text('Kapat'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        }
+      } catch (e) {
+        print('Giriş sırasında hata oluştu: $e');
+      }
     }
   }
+
 }

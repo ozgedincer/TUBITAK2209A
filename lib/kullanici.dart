@@ -44,12 +44,18 @@ class Kayit{
   String? isim;
   String? email;
   String? sifre;
-  Kayit({this.isim,this.email,this.sifre});
+  String? adres;
+  String? key;
+  String? kullaniciId;
+  Kayit({this.isim,this.email,this.sifre,this.adres,this.key,this.kullaniciId});
   factory Kayit.fromSnapshot(DocumentSnapshot snapshot){
     return Kayit(
       isim: snapshot["isim"],
       email: snapshot["email"],
       sifre: snapshot["sifre"],
+      adres: snapshot["adres"],
+      key: snapshot["key"],
+      kullaniciId: snapshot["kullaniciId"],
     );
   }
 }

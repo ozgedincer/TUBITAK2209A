@@ -1,7 +1,10 @@
+import 'package:deneme_a/api.dart';
 import 'package:deneme_a/girisekrani.dart';
 import 'package:deneme_a/kullaniciservisi.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class basvuruGecmisi extends StatefulWidget {
   @override
@@ -9,6 +12,7 @@ class basvuruGecmisi extends StatefulWidget {
 }
 
 class _basvuruGecmisiState extends State<basvuruGecmisi> {
+
   KullaniciServisi _kullaniciServisi = KullaniciServisi();
 
   @override
@@ -18,9 +22,23 @@ class _basvuruGecmisiState extends State<basvuruGecmisi> {
       appBar:AppBar(
         title:Center(child: Text("BAŞVURU GEÇMİŞİ",style: TextStyle(fontSize: 22),),),
         backgroundColor: Colors.green,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.api),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MyHomePage()),
+              );
+            },
+          ),
+        ],
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: _kullaniciServisi.getAct(),
+        stream: FirebaseFirestore.instance
+            .collection('basvuru')
+            .where('userId', isEqualTo: FirebaseAuth.instance.currentUser?.uid ?? '')
+            .snapshots(),
         builder: (context, snapshot) {
           return !snapshot.hasData
               ? CircularProgressIndicator()
@@ -128,7 +146,7 @@ class _basvuruGecmisiState extends State<basvuruGecmisi> {
                                     textAlign: TextAlign.center,
                                   ),
                                   SizedBox(
-                                    height: 10,
+                                    height: 20,
                                   ),
                                   Container(
                                     alignment: Alignment.bottomLeft,
